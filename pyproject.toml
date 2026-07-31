@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "helios-abm-engine"
+version = "0.1.0"
+description = "Evidence-first ABM research and messaging engine with 866 buying-signal definitions."
+requires-python = ">=3.9"
+authors = [{ name = "Reshma Baskaran" }]
+dependencies = []
+
+[project.scripts]
+helios = "helios.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
