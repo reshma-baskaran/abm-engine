@@ -1,6 +1,6 @@
 # Helios ABM Engine: Your Replacement for Clay
 
-![Helios ABM Engine cover](assets/cover.png)
+![Helios ABM Engine cover](assets/cover.svg)
 
 Helios is an evidence-first account research and messaging engine. It turns a campaign brief into scoped research questions, source-backed buying signals, a reviewable account score, and grounded message inputs.
 
