@@ -2,7 +2,12 @@
 
 ![ABM Engine cover](assets/cover.svg)
 
-ABM Engine is an evidence-first account research and messaging engine. It turns a campaign brief into scoped research questions, source-backed buying signals, a reviewable account score, and grounded message inputs.
+ABM Engine is an evidence-first account research and messaging starter kit. It
+turns a campaign brief into scoped research questions, source-backed buying
+signals, a reviewable account score, and grounded message inputs.
+
+The repository is designed to run locally from a fork. It is a research layer,
+not a hosted enrichment or campaign platform.
 
 ## The problem
 
@@ -19,18 +24,32 @@ ABM Engine encodes that judgment in an inspectable workflow:
 
 ## What is included
 
+- A [quickstart](QUICKSTART.md), local configuration example, and workspace initializer.
 - **866 signal definitions** and **858 unique signal keys** across retail and financial-services markets.
 - A zero-dependency Python parser and CLI.
 - Scoped keys for signal names reused across markets.
 - Query-template rendering.
 - Evidence-gated scoring.
+- Blank research-record, evidence-record, and message-brief templates.
 - Three real, first-party-sourced account research records.
 - Tests that lock the verified library counts and scoring boundaries.
 
+## What a fork gives you
+
+After setup, a fork gives you a local research workspace, the signal library,
+query rendering, evidence-record templates, and a reviewable path from signal
+to message brief. Add your own account inputs and public sources; do not commit
+private contact data, CRM records, credentials, or campaign state.
+
+The signal library contains research hypotheses, not proof of buying intent. A
+source-backed observation still needs a human review before it informs outbound.
+
 ## Quick start
 
+See [QUICKSTART.md](QUICKSTART.md) for the full setup. The short version:
+
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
 
@@ -59,7 +78,11 @@ See [docs/architecture.md](docs/architecture.md).
 
 ## Current status
 
-The signal library and research workflow were extracted from an operating ABM platform and rebuilt as a standalone public engine. This release focuses on the research layer. Vendor integrations and campaign execution are intentionally excluded so the repository can be run and inspected without credentials.
+The signal library and research workflow were extracted from an operating ABM
+platform and rebuilt as a standalone public engine. This release focuses on
+the research layer and is packaged as a local starter kit. Vendor integrations,
+contact enrichment, and campaign execution are intentionally excluded so the
+repository can be run and inspected without credentials.
 
 ## Author
 

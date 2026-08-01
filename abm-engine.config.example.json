@@ -1,0 +1,18 @@
+{
+  "workspace_path": "~/Documents/abm-engine-workspace",
+  "library_path": "data/signal-library.md",
+  "evidence": {
+    "required_fields": [
+      "signal_key",
+      "source_url",
+      "evidence",
+      "confidence"
+    ],
+    "human_review_required": true
+  },
+  "privacy": {
+    "keep_contact_data_out_of_public_repo": true,
+    "keep_credentials_out_of_workspace": true,
+    "redact_before_sharing": true
+  }
+}

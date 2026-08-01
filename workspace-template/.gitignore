@@ -1,0 +1,7 @@
+# Account research and generated briefs are local working data.
+research/
+evidence/
+briefs/
+exports/
+private/
+*.local.json
