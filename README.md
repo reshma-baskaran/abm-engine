@@ -1,14 +1,14 @@
-# Helios ABM Engine: Your Replacement for Clay
+# ABM Engine: Your Replacement for Clay
 
-![Helios ABM Engine cover](assets/cover.svg)
+![ABM Engine cover](assets/cover.svg)
 
-Helios is an evidence-first account research and messaging engine. It turns a campaign brief into scoped research questions, source-backed buying signals, a reviewable account score, and grounded message inputs.
+ABM Engine is an evidence-first account research and messaging engine. It turns a campaign brief into scoped research questions, source-backed buying signals, a reviewable account score, and grounded message inputs.
 
 ## The problem
 
 Most enrichment workflows produce rows of data. ABM teams still have to decide which facts matter, whether a source supports the claim, what the timing signal means, and how it should change the message.
 
-Helios encodes that judgment in an inspectable workflow:
+ABM Engine encodes that judgment in an inspectable workflow:
 
 1. Select relevant signals for the account and campaign.
 2. Render targeted research queries.
@@ -34,9 +34,9 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
 
-helios stats
-helios search "AI initiative" --limit 5
-helios render ai_initiative_press_release --company-name "Lowe's" --company-domain lowes.com --ticker LOW
+abm-engine stats
+abm-engine search "AI initiative" --limit 5
+abm-engine render ai_initiative_press_release --company-name "Lowe's" --company-domain lowes.com --ticker LOW
 ```
 
 Run the tests:
@@ -47,7 +47,7 @@ python -m unittest discover -s tests -v
 
 ## How this differs from Clay
 
-Clay is a general enrichment and workflow canvas. Helios is an opinionated ABM research system: the signal taxonomy, evidence record, confidence treatment, human approval boundary, and message-grounding workflow are built into the model. The goal is not to reproduce every Clay integration; it is to make account-level research logic visible and auditable.
+Clay is a general enrichment and workflow canvas. ABM Engine is an opinionated ABM research system: the signal taxonomy, evidence record, confidence treatment, human approval boundary, and message-grounding workflow are built into the model. The goal is not to reproduce every Clay integration; it is to make account-level research logic visible and auditable.
 
 ## Real account cases
 

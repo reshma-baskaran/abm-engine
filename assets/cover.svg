@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
-  <title id="title">Helios ABM Engine</title>
+  <title id="title">ABM Engine</title>
   <desc id="desc">Editorial portfolio cover showing 866 signals becoming ranked account evidence.</desc>
   <rect width="1600" height="900" fill="#f2efe7"/>
   <path d="M0 96H1600M0 814H1600M96 0V900M1504 0V900" stroke="#181816" stroke-opacity=".2"/>
@@ -8,7 +8,7 @@
   <circle cx="1183" cy="54" r="6" fill="#ff6b4a"/>
 
   <text x="96" y="210" font-family="Helvetica Neue,Arial,sans-serif" font-size="21" font-weight="800" letter-spacing="3" fill="#181816">01 / SELECTED SYSTEM</text>
-  <text x="88" y="366" font-family="Helvetica Neue,Arial,sans-serif" font-size="122" font-weight="700" letter-spacing="-9" fill="#181816">Helios ABM</text>
+  <text x="88" y="366" font-family="Helvetica Neue,Arial,sans-serif" font-size="122" font-weight="700" letter-spacing="-9" fill="#181816">ABM</text>
   <text x="92" y="482" font-family="Georgia,Times New Roman,serif" font-size="132" font-style="italic" fill="#2f5cff">Engine.</text>
   <text x="98" y="560" font-family="Helvetica Neue,Arial,sans-serif" font-size="28" fill="#181816">866 buying signals → evidence → ranked account insight</text>
   <text x="98" y="610" font-family="Helvetica Neue,Arial,sans-serif" font-size="20" fill="#181816" opacity=".72">A public, inspectable ABM research system built around source quality.</text>

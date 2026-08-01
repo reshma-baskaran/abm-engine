@@ -1,6 +1,6 @@
 import unittest
 
-from helios.scoring import Evidence, score_evidence
+from abm_engine.scoring import Evidence, score_evidence
 
 
 class ScoringTests(unittest.TestCase):

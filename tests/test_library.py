@@ -1,7 +1,7 @@
 from pathlib import Path
 import unittest
 
-from helios.library import SignalLibrary
+from abm_engine.library import SignalLibrary
 
 
 ROOT = Path(__file__).resolve().parents[1]

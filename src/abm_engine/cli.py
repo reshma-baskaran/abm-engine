@@ -11,7 +11,7 @@ DEFAULT_LIBRARY = Path(__file__).resolve().parents[2] / "data" / "signal-library
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="helios", description="Inspect and render the Helios signal library.")
+    parser = argparse.ArgumentParser(prog="abm-engine", description="Inspect and render the ABM Engine signal library.")
     parser.add_argument("--library", type=Path, default=DEFAULT_LIBRARY)
     commands = parser.add_subparsers(dest="command", required=True)
 
@@ -65,4 +65,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

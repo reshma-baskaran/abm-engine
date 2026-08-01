@@ -1,6 +1,6 @@
-# Helios Outreach — Deterministic Signal Library
+# ABM Engine Outreach — Deterministic Signal Library
 
-**Use case:** ABM signal scoring for Helios professional services (voice agents, conversational AI, contact-center automation, agentic workflows, AI-led CX automation).
+**Use case:** ABM signal scoring for ABM Engine professional services (voice agents, conversational AI, contact-center automation, agentic workflows, AI-led CX automation).
 
 **Scope:** All signals consolidated from sub-industry research and reclassified as **deterministic** for the outreach tool. Organized by industry → sub-industry → category.
 
@@ -21,9 +21,9 @@
 
 ### Hiring
 
-- **`hiring_conversational_voice_ai_role`** — Open role for Conversational/Voice AI engineer or designer. Weight 1.95 / Conf 4. Query: `("{{company_name}}" jobs OR careers) ("conversational AI" OR "voice AI" OR "voice agent" OR "dialog systems" OR "NLU engineer") (site:linkedin.com/jobs OR site:greenhouse.io OR site:lever.co OR site:myworkdayjobs.com)`. *Rationale:* Hiring conv/voice AI talent = explicitly building same capability Helios sells.
+- **`hiring_conversational_voice_ai_role`** — Open role for Conversational/Voice AI engineer or designer. Weight 1.95 / Conf 4. Query: `("{{company_name}}" jobs OR careers) ("conversational AI" OR "voice AI" OR "voice agent" OR "dialog systems" OR "NLU engineer") (site:linkedin.com/jobs OR site:greenhouse.io OR site:lever.co OR site:myworkdayjobs.com)`. *Rationale:* Hiring conv/voice AI talent = explicitly building same capability ABM Engine sells.
 - **`hiring_contact_center_modernization`** — Open roles for contact center / BDC / CX transformation leadership. Weight 1.55 / Conf 3. Query: `"{{company_name}}" ("contact center" OR "call center" OR "customer care" OR "BDC manager" OR "customer experience transformation" OR "digital servicing") (manager OR director OR VP OR "head of") (site:linkedin.com/jobs OR site:indeed.com OR site:greenhouse.io)`. *Rationale:* New CX/contact-center leadership = budget re-baselining, voice/CCaaS-AI evaluation window.
-- **`hiring_ml_data_science_volume`** — Volume of open ML / Data Science / MLOps requisitions. Weight 1.20 / Conf 3. Query: `"{{company_name}}" ("machine learning engineer" OR "data scientist" OR "MLOps" OR "ML platform" OR "AI engineer" OR "applied scientist") (site:linkedin.com/jobs OR site:greenhouse.io)`. *Rationale:* Standing ML/DS bench means org can co-build with Helios services.
+- **`hiring_ml_data_science_volume`** — Volume of open ML / Data Science / MLOps requisitions. Weight 1.20 / Conf 3. Query: `"{{company_name}}" ("machine learning engineer" OR "data scientist" OR "MLOps" OR "ML platform" OR "AI engineer" OR "applied scientist") (site:linkedin.com/jobs OR site:greenhouse.io)`. *Rationale:* Standing ML/DS bench means org can co-build with ABM Engine services.
 - **`hiring_ecommerce_personalization_search`** — E-commerce / catalog search / personalization roles open. Weight 1.15 / Conf 3. Query: `"{{company_name}}" ("search relevance" OR "personalization" OR "product discovery" OR "catalog" OR "fitment" OR "recommendations engine") (engineer OR scientist OR manager)`. *Rationale:* Parts retail's #1 problem is fitment; AI search hiring = data layer for agentic workflows.
 - **`hiring_cdp_data_platform_roles`** — CDP, data platform, or "AI-ready data" engineering roles. Weight 1.10 / Conf 3. Query: `"{{company_name}}" ("customer data platform" OR "CDP" OR "Snowflake" OR "Databricks" OR "data platform" OR "data governance" OR "Alation" OR "Collibra") (engineer OR architect OR manager)`. *Rationale:* Governed data layer is precondition for safe agentic deployment.
 
@@ -51,7 +51,7 @@
 
 ### CX Pain
 
-- **`cx_pain_complaints_call_wait_times`** — Public complaints about call wait, customer service, or commercial desk service. Weight 1.45 / Conf 3. Query: `"{{company_name}}" ("on hold" OR "wait time" OR "no one answered" OR "horrible customer service" OR "commercial desk" OR "wrong part" OR "could not reach") (site:reddit.com OR site:trustpilot.com OR site:bbb.org OR site:consumeraffairs.com OR site:pissedconsumer.com)`. *Rationale:* This is the literal problem statement Helios solves.
+- **`cx_pain_complaints_call_wait_times`** — Public complaints about call wait, customer service, or commercial desk service. Weight 1.45 / Conf 3. Query: `"{{company_name}}" ("on hold" OR "wait time" OR "no one answered" OR "horrible customer service" OR "commercial desk" OR "wrong part" OR "could not reach") (site:reddit.com OR site:trustpilot.com OR site:bbb.org OR site:consumeraffairs.com OR site:pissedconsumer.com)`. *Rationale:* This is the literal problem statement ABM Engine solves.
 - **`cx_pain_mobile_app_reviews`** — App Store / Play Store recent low ratings on support functionality. Weight 0.90 / Conf 3.
 - **`cx_pain_reddit_subreddit_complaints`** — Volume of negative threads in retailer-specific subreddit. Weight 0.75 / Conf 2.
 - **`cx_pain_glassdoor_call_center_understaffing`** — Glassdoor reviews citing understaffed BDC/commercial/customer-care. Weight 0.85 / Conf 2. *Rationale:* Frontline staff publicly saying they can't keep up = finance is actively looking for headcount-avoidance ROI.
@@ -336,16 +336,16 @@
 
 ### Hiring
 
-- **`hiring_conversational_voice_ai_roles`** — Hiring VP of Customer Experience, Chief Customer Officer, or Head of CX. Weight 2.00 / Conf 3. Query: `site:linkedin.com/jobs OR site:greenhouse.io OR site:lever.co "{{company_name}}" ("VP Customer Experience" OR "Vice President Customer Experience" OR "Chief Customer Officer" OR "VP CX" OR "Head of Customer Experience" OR "Director of Customer Experience" OR "CCO")`. *Rationale:* The buyer persona being hired — fresh hire signals new budget and openness to CX tooling. Helios's champion is a VP/Director of CX.
-- **`hiring_ai_ml_leadership`** — Evidence of a large customer service or contact center operation (LinkedIn profiles, Glassdoor mentions, company careers page). Weight 1.80 / Conf 3. Query: `site:linkedin.com "{{company_name}}" ("customer service" OR "contact center" OR "call center" OR "customer care") OR site:glassdoor.com "{{company_name}}" ("customer service" OR "call center" OR "contact center")`. *Rationale:* Large manual CX headcount = high automation ROI. Evidence of an active CS/contact-center workforce — LinkedIn profiles in those roles or Glassdoor reviews mentioning the team — confirms the operational footprint Helios targets.
-- **`hiring_cx_automation_specialist`** — Hiring Head or Director of Contact Center Operations or Customer Service Operations. Weight 1.60 / Conf 3. Query: `site:linkedin.com/jobs OR site:greenhouse.io OR site:lever.co "{{company_name}}" ("Head of Contact Center" OR "Director of Contact Center" OR "VP Contact Center" OR "Director of Customer Service Operations" OR "VP Customer Service" OR "Director of Customer Care")`. *Rationale:* Contact center leadership hire signals CX infrastructure budget and a dedicated owner who evaluates tools like Helios.
+- **`hiring_conversational_voice_ai_roles`** — Hiring VP of Customer Experience, Chief Customer Officer, or Head of CX. Weight 2.00 / Conf 3. Query: `site:linkedin.com/jobs OR site:greenhouse.io OR site:lever.co "{{company_name}}" ("VP Customer Experience" OR "Vice President Customer Experience" OR "Chief Customer Officer" OR "VP CX" OR "Head of Customer Experience" OR "Director of Customer Experience" OR "CCO")`. *Rationale:* The buyer persona being hired — fresh hire signals new budget and openness to CX tooling. ABM Engine's champion is a VP/Director of CX.
+- **`hiring_ai_ml_leadership`** — Evidence of a large customer service or contact center operation (LinkedIn profiles, Glassdoor mentions, company careers page). Weight 1.80 / Conf 3. Query: `site:linkedin.com "{{company_name}}" ("customer service" OR "contact center" OR "call center" OR "customer care") OR site:glassdoor.com "{{company_name}}" ("customer service" OR "call center" OR "contact center")`. *Rationale:* Large manual CX headcount = high automation ROI. Evidence of an active CS/contact-center workforce — LinkedIn profiles in those roles or Glassdoor reviews mentioning the team — confirms the operational footprint ABM Engine targets.
+- **`hiring_cx_automation_specialist`** — Hiring Head or Director of Contact Center Operations or Customer Service Operations. Weight 1.60 / Conf 3. Query: `site:linkedin.com/jobs OR site:greenhouse.io OR site:lever.co "{{company_name}}" ("Head of Contact Center" OR "Director of Contact Center" OR "VP Contact Center" OR "Director of Customer Service Operations" OR "VP Customer Service" OR "Director of Customer Care")`. *Rationale:* Contact center leadership hire signals CX infrastructure budget and a dedicated owner who evaluates tools like ABM Engine.
 - **`hiring_seasonal_contact_center_surge`** — Seasonal/peak-season CX hiring surge (>50 open CX reqs). Weight 1.20 / Conf 3.
 - **`hiring_recsys_personalization_engineers`** — Recommendation systems, visual search, product discovery ML. Weight 1.20 / Conf 3.
 - **`hiring_supply_chain_forecasting_analytics`** — Demand forecasting, inventory analytics, supply chain ML. Weight 1.10 / Conf 3.
 - **`hiring_rpa_automation_developer`** — RPA developer / automation engineer / process automation roles. Weight 1.00 / Conf 3.
-- **`hiring_mlops_data_platform`** — Head of CX Technology, Customer Experience Technology Manager, or Digital Service leader exists at the company (LinkedIn profile). Weight 1.50 / Conf 3. Query: `site:linkedin.com "{{company_name}}" ("CX technology" OR "customer experience technology" OR "contact center technology" OR "digital customer service" OR "customer service technology" OR "VP Customer Experience Technology" OR "Director of CX Technology")`. *Rationale:* A dedicated CX technology owner signals active budget for contact center tooling and willingness to evaluate Helios.
+- **`hiring_mlops_data_platform`** — Head of CX Technology, Customer Experience Technology Manager, or Digital Service leader exists at the company (LinkedIn profile). Weight 1.50 / Conf 3. Query: `site:linkedin.com "{{company_name}}" ("CX technology" OR "customer experience technology" OR "contact center technology" OR "digital customer service" OR "customer service technology" OR "VP Customer Experience Technology" OR "Director of CX Technology")`. *Rationale:* A dedicated CX technology owner signals active budget for contact center tooling and willingness to evaluate ABM Engine.
 - **`hiring_ar_3d_computer_vision_specialist`** — AR/VR engineering, 3D modeling, CV for products. Weight 0.90 / Conf 3.
-- **`hiring_head_of_ecommerce_digital`** — VP or Head of E-commerce / Chief Digital Officer exists at the company (LinkedIn profile or press coverage). Weight 1.30 / Conf 3. Query: `site:linkedin.com "{{company_name}}" ("VP E-Commerce" OR "VP Ecommerce" OR "Head of E-Commerce" OR "Chief Digital Officer" OR "VP Digital" OR "Head of Digital" OR "Director of E-Commerce" OR "Director of Digital Experience")`. *Rationale:* An identifiable digital/e-commerce leader means there is a dedicated owner of the digital customer surface where Helios's AI mediation layer operates — a VP E-commerce or CDO is a secondary champion or at minimum a stakeholder in CX tooling decisions.
+- **`hiring_head_of_ecommerce_digital`** — VP or Head of E-commerce / Chief Digital Officer exists at the company (LinkedIn profile or press coverage). Weight 1.30 / Conf 3. Query: `site:linkedin.com "{{company_name}}" ("VP E-Commerce" OR "VP Ecommerce" OR "Head of E-Commerce" OR "Chief Digital Officer" OR "VP Digital" OR "Head of Digital" OR "Director of E-Commerce" OR "Director of Digital Experience")`. *Rationale:* An identifiable digital/e-commerce leader means there is a dedicated owner of the digital customer surface where ABM Engine's AI mediation layer operates — a VP E-commerce or CDO is a secondary champion or at minimum a stakeholder in CX tooling decisions.
 
 ### Funding & Financial
 
@@ -359,7 +359,7 @@
 
 ### Tech Stack
 
-- **`techstack_modern_cloud_contact_center`** — Cloud CCaaS (Five9, NICE CXone, Talkdesk, Genesys Cloud, Amazon Connect, Twilio Flex). Weight 1.50 / Conf 4. *Rationale:* Single best deterministic signal for Helios voice CX agent fit.
+- **`techstack_modern_cloud_contact_center`** — Cloud CCaaS (Five9, NICE CXone, Talkdesk, Genesys Cloud, Amazon Connect, Twilio Flex). Weight 1.50 / Conf 4. *Rationale:* Single best deterministic signal for ABM Engine voice CX agent fit.
 - **`techstack_chatbot_platform_in_use`** — Ada, Intercom Fin, Forethought, Kustomer, Cresta, ASAPP, LivePerson, Drift, Gorgias AI. Weight 1.20 / Conf 4.
 - **`techstack_zendesk_salesforce_service_cloud`** — Customer service platform: Zendesk, Salesforce Service Cloud, Kustomer, Freshdesk, Help Scout. Weight 1.00 / Conf 4.
 - **`techstack_shopify_plus`** — Uses Shopify Plus. Weight 1.10 / Conf 5.
@@ -402,7 +402,7 @@
 - **`industry_visual_search_image_shopping`** — Visual search / image-based shopping feature. Weight 0.80 / Conf 3.
 - **`industry_furniture_configurator_modular`** — Product configurator for modular/customizable furniture. Weight 0.80 / Conf 3.
 - **`industry_designer_trade_program`** — Designer/trade B2B program. Weight 0.70 / Conf 4.
-- **`industry_white_glove_scheduling_complexity`** — White-glove delivery / assembly / inside-room delivery. Weight 1.20 / Conf 4. *Rationale:* Canonical Helios voice agent use case for furniture.
+- **`industry_white_glove_scheduling_complexity`** — White-glove delivery / assembly / inside-room delivery. Weight 1.20 / Conf 4. *Rationale:* Canonical ABM Engine voice agent use case for furniture.
 - **`industry_returns_policy_complexity`** — Returns/exchange policy mentions sizing/fit/space issues. Weight 0.90 / Conf 3.
 - **`industry_showroom_to_online_transition`** — Public commentary on shifting from showroom-led to digital-led. Weight 0.80 / Conf 3.
 
@@ -832,7 +832,7 @@
 - **`open_ai_ml_engineer_roles`** — Open ML/AI engineering roles. Strength: High. Query: `site:linkedin.com/jobs "{{company_name}}" ("machine learning engineer" OR "ML engineer" OR "AI engineer")`.
 - **`open_data_scientist_roles`** — Open data scientist roles. Strength: High. Query: `site:linkedin.com/jobs "{{company_name}}" "data scientist"`.
 - **`open_mlops_platform_roles`** — MLOps / ML platform / ML infrastructure roles. Strength: High.
-- **`open_conversational_voice_ai_roles`** — Conversational AI / Voice AI / NLP engineer / speech roles. Strength: Very High. Direct match to Helios ICP.
+- **`open_conversational_voice_ai_roles`** — Conversational AI / Voice AI / NLP engineer / speech roles. Strength: Very High. Direct match to ABM Engine ICP.
 - **`open_llm_prompt_engineer_roles`** — LLM / Prompt engineer / generative AI roles. Strength: Very High.
 - **`open_data_engineering_roles`** — Data engineer / analytics engineer roles. Strength: Medium.
 - **`open_responsible_ai_roles`** — Responsible AI / AI governance / model risk roles. Strength: High.
@@ -1044,8 +1044,8 @@
 
 - **`S-STRAT-01`** — Public AI Strategy / Generative AI Mention in CEO Letter. Conf 0.8 / Weight 9.
 - **`S-STRAT-02`** — Digital Transformation Roadmap in public filings. Conf 0.65 / Weight 7.
-- **`S-STRAT-03`** — Servicing / Collections Modernization Mandate. Conf 0.75 / Weight 10. *Rationale:* Highest Helios fit.
-- **`S-STRAT-04`** — Underwriting AI as Core Strategy. Conf 0.95 / Weight 4. *Rationale:* Already built — signals maturity but NOT Helios's wedge.
+- **`S-STRAT-03`** — Servicing / Collections Modernization Mandate. Conf 0.75 / Weight 10. *Rationale:* Highest ABM Engine fit.
+- **`S-STRAT-04`** — Underwriting AI as Core Strategy. Conf 0.95 / Weight 4. *Rationale:* Already built — signals maturity but NOT ABM Engine's wedge.
 - **`S-STRAT-05`** — Member Experience / Conversational AI Product Strategy. Conf 0.85 / Weight 10.
 
 ### Product / Operational
@@ -1141,7 +1141,7 @@
 
 - **`hiring.ai_ml_role_count`** — Open AI/ML/data-science/AI engineer roles. Weight 5. Query: `site:carrier.com/careers ("machine learning" OR "ML engineer" OR "data scientist" OR "AI engineer")`. Threshold: ≥5 = strong, ≥15 = very strong.
 - **`hiring.gen_ai_specialist_role`** — Generative AI / LLM / prompt engineer / MLOps / agentic AI roles. Weight 5. *Rationale:* Differentiates production gen-AI from classical ML.
-- **`hiring.conversational_ai_role`** — Conversational AI / voice AI / chatbot / NLP engineer / dialog designer roles. Weight 5. *Rationale:* Direct fit for Helios voice AI / CX automation.
+- **`hiring.conversational_ai_role`** — Conversational AI / voice AI / chatbot / NLP engineer / dialog designer roles. Weight 5. *Rationale:* Direct fit for ABM Engine voice AI / CX automation.
 - **`hiring.chief_ai_officer_or_equivalent`** — Chief AI Officer / Chief Data & Analytics Officer / Head of AI. Weight 5. *Rationale:* CAIO hire is a 12-month leading buy signal.
 - **`hiring.contact_center_modernization_role`** — Contact center / CX transformation director/VP/head of insurance. Weight 4.
 - **`hiring.platform_engineer_ccaas`** — Genesys / NICE CXone / Five9 / Talkdesk / Amazon Connect engineer. Weight 4.
