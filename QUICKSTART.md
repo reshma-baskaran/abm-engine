@@ -15,6 +15,13 @@ source .venv/bin/activate
 python -m pip install -e .
 ```
 
+If your environment cannot install Python build dependencies, run the CLI
+directly from the checkout instead:
+
+```bash
+PYTHONPATH=src python -m abm_engine.cli stats
+```
+
 ## 2. Create a local workspace
 
 Copy the configuration example and change `workspace_path` to a location
