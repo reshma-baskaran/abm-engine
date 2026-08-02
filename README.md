@@ -1,4 +1,4 @@
-# ABM Engine: Your Replacement for Clay
+# ABM Engine: Turn Buying Signals Into Relevant Messages
 
 ![ABM Engine cover](assets/cover.svg)
 
@@ -64,9 +64,13 @@ Run the tests:
 python -m unittest discover -s tests -v
 ```
 
-## How this differs from Clay
+## Why this engine exists
 
-Clay is a general enrichment and workflow canvas. ABM Engine is an opinionated ABM research system: the signal taxonomy, evidence record, confidence treatment, human approval boundary, and message-grounding workflow are built into the model. The goal is not to reproduce every Clay integration; it is to make account-level research logic visible and auditable.
+ABM Engine is an opinionated research system for converting account signals
+into source-backed message inputs. The signal taxonomy, evidence record,
+confidence treatment, human approval boundary, and message-grounding workflow
+are built into the model, making account-level research logic visible and
+auditable.
 
 ## Real account cases
 
