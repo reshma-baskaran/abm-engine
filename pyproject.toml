@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "abm-engine"
 version = "0.1.0"
-description = "Evidence-first ABM research starter kit with 866 buying-signal definitions."
+description = "Evidence-first ABM research toolkit with a portable signal pack and 866 legacy sector definitions."
 requires-python = ">=3.9"
 authors = [{ name = "Reshma Baskaran" }]
 dependencies = []

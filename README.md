@@ -25,11 +25,19 @@ ABM Engine encodes that judgment in an inspectable workflow:
 ## What is included
 
 - A [quickstart](QUICKSTART.md), local configuration example, and workspace initializer.
-- **866 signal definitions** and **858 unique signal keys** across retail and financial-services markets.
+- A default **21-signal industry-agnostic pack** extracted from recurring
+  concepts in the original library, with applicability, disqualifiers, source
+  priority, freshness, safe interpretation, and prohibited inference.
+- The original **866 signal definitions** and **858 unique signal keys** across
+  retail and financial-services markets, available as the `legacy` pack.
 - A zero-dependency Python parser and CLI.
 - Scoped keys for signal names reused across markets.
-- Query-template rendering.
-- Evidence-gated scoring.
+- Query-template rendering for every portable signal.
+- A fail-closed account workflow that reports missing campaign inputs and does
+  not create a message brief prematurely.
+- Evidence validation and approval-gated scoring.
+- Human-review message-brief generation from complete campaign inputs and
+  approved evidence only.
 - Blank research-record, evidence-record, and message-brief templates.
 - Three real, first-party-sourced account research records.
 - Tests that lock the verified library counts and scoring boundaries.
@@ -55,7 +63,14 @@ python -m pip install -e .
 
 abm-engine stats
 abm-engine search "AI initiative" --limit 5
-abm-engine render ai_initiative_press_release --company-name "Lowe's" --company-domain lowes.com --ticker LOW
+abm-engine render public_product_launch --company-name "Attio" --company-domain attio.com
+
+abm-engine account-run \
+  --brief templates/campaign-brief.json \
+  --company-name "Attio" \
+  --company-domain attio.com \
+  --industry "B2B SaaS CRM" \
+  --out /path/outside/the/repository/attio
 ```
 
 Run the tests:
@@ -82,11 +97,12 @@ See [docs/architecture.md](docs/architecture.md).
 
 ## Current status
 
-The signal library and research workflow were extracted from an operating ABM
-platform and rebuilt as a standalone public engine. This release focuses on
-the research layer and is packaged as a local starter kit. Vendor integrations,
-contact enrichment, and campaign execution are intentionally excluded so the
-repository can be run and inspected without credentials.
+The original signal library and research workflow were extracted from an
+operating ABM platform and rebuilt as a standalone public engine. The portable
+pack is a conservative cross-industry layer; it does not relabel sector logic
+as universal intent. The legacy retail and financial-services definitions
+remain inspectable through `--pack legacy`. Vendor integrations, contact
+enrichment, and campaign execution are intentionally excluded.
 
 ## Author
 

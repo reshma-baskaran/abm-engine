@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -27,6 +28,14 @@ class Signal:
     query_template: str | None
     rationale: str | None
     source_line: int
+    applicability: str | None = None
+    disqualifiers: tuple[str, ...] = ()
+    source_priority: tuple[str, ...] = ()
+    freshness_days: int | None = None
+    safe_interpretation: str | None = None
+    prohibited_inference: str | None = None
+    extracted_from: tuple[str, ...] = ()
+    pack: str = "legacy"
 
     @property
     def scoped_key(self) -> str:
@@ -95,6 +104,44 @@ class SignalLibrary:
             )
         return cls(signals)
 
+    @classmethod
+    def from_json(cls, path: str | Path) -> "SignalLibrary":
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+        raw_signals = payload.get("signals") if isinstance(payload, dict) else None
+        if not isinstance(raw_signals, list):
+            raise ValueError("signal pack must contain a signals array")
+        signals: list[Signal] = []
+        for number, item in enumerate(raw_signals, 1):
+            if not isinstance(item, dict):
+                raise ValueError(f"signal {number} must be an object")
+            required = ("key", "label", "category", "query_template", "applicability", "safe_interpretation", "prohibited_inference")
+            missing = [field for field in required if not str(item.get(field, "")).strip()]
+            if missing:
+                raise ValueError(f"signal {number} is missing: {', '.join(missing)}")
+            signals.append(
+                Signal(
+                    key=str(item["key"]),
+                    label=str(item["label"]),
+                    industry=str(payload.get("industry", "Industry agnostic")),
+                    sub_industry=str(payload.get("sub_industry", "Portable")),
+                    category=str(item["category"]),
+                    weight=float(item["weight"]),
+                    confidence=float(item["confidence"]),
+                    query_template=str(item["query_template"]),
+                    rationale=str(item.get("rationale", "")) or None,
+                    source_line=number,
+                    applicability=str(item["applicability"]),
+                    disqualifiers=tuple(str(value) for value in item.get("disqualifiers", [])),
+                    source_priority=tuple(str(value) for value in item.get("source_priority", [])),
+                    freshness_days=int(item["freshness_days"]),
+                    safe_interpretation=str(item["safe_interpretation"]),
+                    prohibited_inference=str(item["prohibited_inference"]),
+                    extracted_from=tuple(str(value) for value in item.get("extracted_from", [])),
+                    pack=str(payload.get("pack", "industry-agnostic")),
+                )
+            )
+        return cls(signals)
+
     def search(self, text: str = "", *, industry: str = "", category: str = "") -> list[Signal]:
         needle = text.casefold()
         industry_needle = industry.casefold()
@@ -119,4 +166,3 @@ class SignalLibrary:
             "categories": len({signal.category for signal in self.signals}),
             "query_templates": sum(signal.query_template is not None for signal in self.signals),
         }
-

@@ -1,6 +1,7 @@
 {
   "workspace_path": "~/Documents/abm-engine-workspace",
-  "library_path": "data/signal-library.md",
+  "signal_pack": "portable",
+  "library_path": "data/industry-agnostic-signals.json",
   "evidence": {
     "required_fields": [
       "signal_key",

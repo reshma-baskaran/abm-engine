@@ -45,6 +45,20 @@ class SignalLibraryTests(unittest.TestCase):
             self.assertEqual([], skipped)
             self.assertTrue((workspace / "templates/research-record.md").exists())
             self.assertTrue((workspace / "templates/evidence-record.json").exists())
+            self.assertTrue((workspace / "templates/campaign-brief.json").exists())
+
+    def test_industry_agnostic_pack_has_complete_portable_schema(self):
+        library = SignalLibrary.from_json(ROOT / "data" / "industry-agnostic-signals.json")
+        self.assertGreaterEqual(len(library.signals), 20)
+        self.assertEqual(len(library.signals), len({signal.key for signal in library.signals}))
+        for signal in library.signals:
+            self.assertEqual("industry-agnostic-v1", signal.pack)
+            self.assertTrue(signal.query_template)
+            self.assertTrue(signal.applicability)
+            self.assertTrue(signal.safe_interpretation)
+            self.assertTrue(signal.prohibited_inference)
+            self.assertTrue(signal.source_priority)
+            self.assertTrue(signal.extracted_from)
 
 
 if __name__ == "__main__":
