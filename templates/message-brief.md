@@ -7,12 +7,13 @@ review_status: "draft"
 
 # Message brief
 
-This brief is a human-reviewed bridge from evidence to messaging. It is not a
-campaign payload and must not contain unsupported certainty.
+This brief is a human-reviewed bridge from evidence to messaging. The problem
+and consequence are hypotheses supplied by the campaign payload. They remain
+unverified until account evidence confirms them.
 
-## Operating problem
+## Problem hypothesis to validate
 
-## Consequence
+## Possible consequence if confirmed
 
 ## Evidence that can be stated
 
@@ -20,5 +21,9 @@ campaign payload and must not contain unsupported certainty.
 |---|---|---|---|
 
 ## Evidence that must not be stated
+
+## Account hypothesis
+
+## Outreach decision
 
 ## Suggested next step

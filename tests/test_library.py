@@ -60,6 +60,11 @@ class SignalLibraryTests(unittest.TestCase):
             self.assertTrue(signal.source_priority)
             self.assertTrue(signal.extracted_from)
 
+    def test_natural_language_search_handles_key_separators(self):
+        library = SignalLibrary.from_json(ROOT / "data" / "industry-agnostic-signals.json")
+        keys = [signal.key for signal in library.search("product launch")]
+        self.assertIn("public_product_launch", keys)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -55,6 +55,34 @@ class WorkflowTests(unittest.TestCase):
             )
         self.assertEqual("needs_research", result.status)
 
+    def test_signal_recommendations_use_campaign_context(self):
+        brief = {
+            "seller_identity": "Named seller",
+            "offer": "Governed AI workspace for marketing teams",
+            "buyer_role": "VP Marketing",
+            "campaign_objective": "Improve campaign research, messaging, and knowledge reuse",
+            "desired_action": "Review one marketing workflow",
+            "operating_problem": "Marketing research and campaign knowledge are fragmented across tools.",
+            "consequence": "Slow campaign production and inconsistent messaging.",
+            "proof_points": ["Approved proof"],
+        }
+        with TemporaryDirectory() as directory:
+            out = Path(directory)
+            run_account(
+                library=self.library,
+                brief=brief,
+                company_name="Mixpanel",
+                domain="mixpanel.com",
+                industry="B2B SaaS product analytics",
+                output_dir=out,
+            )
+            manifest = json.loads((out / "account-manifest.json").read_text(encoding="utf-8"))
+        keys = [item["signal_key"] for item in manifest["recommended_signals"]]
+        self.assertIn("content_topic_concentration", keys[:5])
+        self.assertIn("market_narrative_change", keys[:5])
+        self.assertNotIn("acquisition_or_merger", keys[:5])
+        self.assertTrue(all("relevance_reason" in item for item in manifest["recommended_signals"]))
+
     def test_evidence_requires_https_dates_rationale_reviewer_and_approval(self):
         payload = {"items": [{"signal_key": "public_product_launch", "source_url": "http://x", "confidence": 2}]}
         errors = validate_evidence(payload, self.library)

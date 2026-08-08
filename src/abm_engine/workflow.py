@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import re
+from collections import defaultdict
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -20,6 +22,54 @@ REQUIRED_BRIEF_FIELDS = (
     "proof_points",
 )
 APPROVAL_STATES = {"pending", "approved", "rejected"}
+TOKEN_RE = re.compile(r"[a-z0-9]+")
+STOPWORDS = {
+    "a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "in", "into", "is", "it",
+    "of", "on", "or", "that", "the", "their", "this", "to", "with", "when", "where", "which", "across",
+}
+SECONDARY_GENERIC = {
+    "account", "campaign", "companies", "company", "consequence", "evidence", "gtm", "integration",
+    "knowledge", "objective", "operating", "portable", "problem", "relevant", "research", "workflow",
+}
+CONCEPT_ALIASES = {
+    "ai": "technology", "automation": "technology", "technical": "technology",
+    "api": "integration", "apps": "integration", "connect": "integration", "connected": "integration",
+    "platform": "integration", "tools": "integration", "workflow": "integration", "workflows": "integration",
+    "brand": "narrative", "campaign": "gtm", "campaigns": "gtm", "content": "narrative",
+    "marketing": "gtm", "message": "narrative", "messages": "narrative", "messaging": "narrative",
+    "positioning": "narrative", "sales": "gtm",
+    "insight": "knowledge", "insights": "knowledge", "intelligence": "knowledge", "research": "knowledge",
+    "synthesis": "knowledge",
+    "cost": "efficiency", "faster": "efficiency", "productivity": "efficiency", "slow": "efficiency",
+    "slower": "efficiency", "speed": "efficiency",
+    "time": "efficiency",
+    "capabilities": "product", "capability": "product", "feature": "product", "features": "product",
+    "launches": "launch", "customers": "customer", "buyers": "buyer", "segments": "segment",
+}
+SIGNAL_CONCEPTS = {
+    "recent_funding_or_growth_capital": {"capital", "funding", "growth"},
+    "executive_appointment_relevant_function": {"executive", "leadership"},
+    "relevant_hiring_cluster": {"headcount", "hiring", "talent"},
+    "public_product_launch": {"launch", "product"},
+    "new_integration_or_platform_ecosystem": {"ecosystem", "integration", "technology"},
+    "geographic_expansion": {"expansion", "geographic", "growth"},
+    "pricing_or_packaging_change": {"commercial", "packaging", "pricing"},
+    "customer_segment_expansion": {"buyer", "customer", "gtm", "segment"},
+    "named_strategic_priority": {"priority", "strategy"},
+    "public_partnership_announcement": {"ecosystem", "partnership"},
+    "acquisition_or_merger": {"acquisition", "corporate", "merger"},
+    "documented_customer_friction_pattern": {"customer", "experience", "friction"},
+    "security_compliance_milestone": {"compliance", "governance", "privacy", "security"},
+    "technology_modernization_evidence": {"architecture", "modernization", "technology"},
+    "first_party_customer_proof": {"case", "customer", "proof"},
+    "market_narrative_change": {"category", "gtm", "narrative", "positioning"},
+    "event_or_conference_priority": {"conference", "event", "executive"},
+    "operating_efficiency_priority": {"cost", "efficiency", "productivity", "speed"},
+    "documented_service_or_status_incident": {"incident", "reliability", "service", "status"},
+    "partner_program_expansion": {"channel", "ecosystem", "partner"},
+    "content_topic_concentration": {"content", "gtm", "knowledge", "narrative", "research"},
+}
+RELEVANCE_VOCABULARY = set().union(*SIGNAL_CONCEPTS.values())
 
 
 @dataclass(frozen=True)
@@ -58,6 +108,50 @@ def missing_brief_fields(brief: dict) -> list[str]:
     return missing
 
 
+def _tokens(value: object) -> set[str]:
+    raw = {token for token in TOKEN_RE.findall(str(value).casefold()) if token not in STOPWORDS and len(token) > 1}
+    return raw | {CONCEPT_ALIASES[token] for token in raw if token in CONCEPT_ALIASES}
+
+
+def _signal_relevance(signal, brief: dict, industry: str) -> tuple[float, list[str]]:
+    signal_token_weights: dict[str, float] = defaultdict(float)
+    for token in SIGNAL_CONCEPTS.get(signal.key, set()):
+        signal_token_weights[token] = 4.0
+    for value in (signal.key, signal.label, signal.category):
+        for token in (_tokens(value) - SECONDARY_GENERIC) & RELEVANCE_VOCABULARY:
+            signal_token_weights[token] = max(signal_token_weights[token], 3.0)
+    for value in (signal.rationale, signal.applicability, signal.safe_interpretation):
+        for token in (_tokens(value) - SECONDARY_GENERIC) & RELEVANCE_VOCABULARY:
+            signal_token_weights[token] = max(signal_token_weights[token], 1.0)
+    weights = {
+        "offer": 3.0,
+        "buyer_role": 2.5,
+        "operating_problem": 3.0,
+        "consequence": 2.0,
+        "campaign_objective": 2.0,
+        "desired_action": 1.0,
+        "industry": 1.0,
+    }
+    matched: dict[str, float] = defaultdict(float)
+    for field, weight in weights.items():
+        value = industry if field == "industry" else brief.get(field, "")
+        for token in _tokens(value) & set(signal_token_weights):
+            matched[token] = max(matched[token], weight * signal_token_weights[token])
+    return round(sum(matched.values()), 2), sorted(matched)
+
+
+def _rank_signals(library: SignalLibrary, brief: dict, industry: str) -> list[tuple[object, float, list[str]]]:
+    ranked = []
+    for signal in library.signals:
+        relevance, matched = _signal_relevance(signal, brief, industry)
+        ranked.append((signal, relevance, matched))
+    return sorted(
+        ranked,
+        key=lambda item: (item[1], item[0].confidence or 0.0, item[0].weight or 0.0),
+        reverse=True,
+    )
+
+
 def _render_research_record(company_name: str, domain: str, industry: str, status: str, signals: list[dict]) -> str:
     lines = [
         "---",
@@ -74,13 +168,14 @@ def _render_research_record(company_name: str, domain: str, industry: str, statu
         "",
         "## Recommended research hypotheses",
         "",
-        "| Signal key | Why it is portable | Research query |",
-        "|---|---|---|",
+        "| Signal key | Campaign relevance | Why it is portable | Research query |",
+        "|---|---|---|---|",
     ]
     for signal in signals:
         query = str(signal["query"]).replace("|", "\\|")
         applicability = str(signal["applicability"]).replace("|", "\\|")
-        lines.append(f"| `{signal['signal_key']}` | {applicability} | `{query}` |")
+        relevance = str(signal["relevance_reason"]).replace("|", "\\|")
+        lines.append(f"| `{signal['signal_key']}` | {relevance} | {applicability} | `{query}` |")
     lines.extend(
         [
             "",
@@ -112,11 +207,7 @@ def run_account(
     output_dir.mkdir(parents=True, exist_ok=True)
     missing = missing_brief_fields(brief)
     status = "needs_input" if missing else "needs_research"
-    ranked = sorted(
-        library.signals,
-        key=lambda signal: (signal.confidence or 0.0, signal.weight or 0.0),
-        reverse=True,
-    )[:limit]
+    ranked = _rank_signals(library, brief, industry)[:limit]
     recommendations = [
         {
             "signal_key": signal.key,
@@ -128,14 +219,21 @@ def run_account(
             "safe_interpretation": signal.safe_interpretation,
             "prohibited_inference": signal.prohibited_inference,
             "query": signal.render_query(company_name=company_name, company_domain=domain, ticker=""),
+            "relevance_score": relevance,
+            "relevance_terms": matched,
+            "relevance_reason": (
+                f"Matched campaign concepts: {', '.join(matched)}."
+                if matched else
+                "No direct campaign-language match; retained by base signal confidence and weight."
+            ),
         }
-        for signal in ranked
+        for signal, relevance, matched in ranked
     ]
     manifest = {
         "account": company_name,
         "domain": domain,
         "industry": industry,
-        "signal_pack": ranked[0].pack if ranked else "unknown",
+        "signal_pack": ranked[0][0].pack if ranked else "unknown",
         "status": status,
         "missing": missing,
         "recommended_signals": recommendations,
@@ -236,13 +334,17 @@ def build_message_brief(*, brief: dict, evidence: dict, library: SignalLibrary) 
         f"- Buyer role: {brief['buyer_role']}",
         f"- Objective: {brief['campaign_objective']}",
         "",
-        "## Operating problem",
+        "## Problem hypothesis to validate",
         "",
         str(brief["operating_problem"]),
         "",
-        "## Consequence",
+        "> This is a campaign hypothesis, not a verified account condition.",
+        "",
+        "## Possible consequence if confirmed",
         "",
         str(brief["consequence"]),
+        "",
+        "> This consequence is conditional and must not be stated as an account outcome.",
         "",
         "## Approved evidence that can be stated",
         "",
@@ -259,6 +361,19 @@ def build_message_brief(*, brief: dict, evidence: dict, library: SignalLibrary) 
     for claim in brief.get("prohibited_claims", []):
         if str(claim).strip():
             lines.append(f"- {claim}")
+    labels = [known[item["signal_key"]].label for item in approved]
+    lines.extend([
+        "",
+        "## Account hypothesis",
+        "",
+        f"Approved evidence confirms activity around: {', '.join(labels)}.",
+        f"This creates an exploratory reason to ask whether the following problem is relevant to {evidence.get('account', '')}: {brief['operating_problem']}",
+        "It does not confirm the problem, its consequence, budget, urgency, vendor evaluation, or purchase intent.",
+        "",
+        "## Outreach decision",
+        "",
+        "`exploratory_only` — source-backed relevance exists, but the operating problem remains unverified.",
+    ])
     lines.extend([
         "",
         "## Approved proof points",

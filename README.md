@@ -9,6 +9,23 @@ signals, a reviewable account score, and grounded message inputs.
 The repository is designed to run locally from a fork. It is a research layer,
 not a hosted enrichment or campaign platform.
 
+## From brief to defensible message inputs
+
+| You provide | The engine produces |
+|---|---|
+| Seller, offer, buyer, objective, problem hypothesis and proof | A completeness decision that fails closed |
+| Account, domain and industry | Brief-aware signal recommendations with visible relevance reasons |
+| Reviewed public evidence | Validated observations and an approval-gated evidence score |
+| Approved observations | An exploratory account hypothesis, claim boundaries and a reviewable message brief |
+
+```text
+complete brief → needs_research → approved evidence → exploratory_only
+```
+
+See the real, public-source research records for [Lowe's, Klarna and Bank of
+America](cases/README.md). They demonstrate the evidence model and do not claim
+a customer relationship, opportunity or purchase intent.
+
 ## The problem
 
 Most enrichment workflows produce rows of data. ABM teams still have to decide which facts matter, whether a source supports the claim, what the timing signal means, and how it should change the message.
@@ -35,9 +52,10 @@ ABM Engine encodes that judgment in an inspectable workflow:
 - Query-template rendering for every portable signal.
 - A fail-closed account workflow that reports missing campaign inputs and does
   not create a message brief prematurely.
+- Brief-aware signal ranking with visible relevance terms and reasons.
 - Evidence validation and approval-gated scoring.
 - Human-review message-brief generation from complete campaign inputs and
-  approved evidence only.
+  approved evidence only, with problem hypotheses separated from verified facts.
 - Blank research-record, evidence-record, and message-brief templates.
 - Three real, first-party-sourced account research records.
 - Tests that lock the verified library counts and scoring boundaries.

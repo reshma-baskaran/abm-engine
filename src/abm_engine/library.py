@@ -143,16 +143,31 @@ class SignalLibrary:
         return cls(signals)
 
     def search(self, text: str = "", *, industry: str = "", category: str = "") -> list[Signal]:
-        needle = text.casefold()
+        needles = set(re.findall(r"[a-z0-9]+", text.casefold()))
         industry_needle = industry.casefold()
         category_needle = category.casefold()
-        return [
-            signal
-            for signal in self.signals
-            if (not needle or needle in " ".join((signal.key, signal.label, signal.rationale or "")).casefold())
-            and (not industry_needle or industry_needle in signal.industry.casefold())
-            and (not category_needle or category_needle in signal.category.casefold())
-        ]
+        matches = []
+        for signal in self.signals:
+            searchable = " ".join(
+                str(value or "")
+                for value in (
+                    signal.key,
+                    signal.label,
+                    signal.category,
+                    signal.rationale,
+                    signal.applicability,
+                    signal.safe_interpretation,
+                )
+            )
+            tokens = set(re.findall(r"[a-z0-9]+", searchable.casefold()))
+            if needles and not needles.issubset(tokens):
+                continue
+            if industry_needle and industry_needle not in signal.industry.casefold():
+                continue
+            if category_needle and category_needle not in signal.category.casefold():
+                continue
+            matches.append(signal)
+        return matches
 
     def by_key(self, key: str) -> list[Signal]:
         return [signal for signal in self.signals if signal.key == key]
