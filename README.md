@@ -26,6 +26,9 @@ See the real, public-source research records for [Lowe's, Klarna and Bank of
 America](cases/README.md). They demonstrate the evidence model and do not claim
 a customer relationship, opportunity or purchase intent.
 
+If this evidence-first approach is useful, **star the repository** to keep it
+close and help another GTM operator discover it.
+
 ## The problem
 
 Most enrichment workflows produce rows of data. ABM teams still have to decide which facts matter, whether a source supports the claim, what the timing signal means, and how it should change the message.
